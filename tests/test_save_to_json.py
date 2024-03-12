@@ -1,4 +1,4 @@
-from src.saver import SaveToJSON
+from src.save_to_json import SaveToJSON
 
 some_saver = SaveToJSON('some_path', 'some_data')
 

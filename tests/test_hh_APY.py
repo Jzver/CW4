@@ -1,4 +1,4 @@
-from src.api import GetVacancies
+from src.hh_API import APIData, GetVacancies
 
 get_vac = GetVacancies('some_major')
 

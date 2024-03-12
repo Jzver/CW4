@@ -1,4 +1,4 @@
-from src.func import filter_city, filter_vacancies, get_vacancies_by_salary, print_vacancies, sort_vacancies, \
+from src.function import filter_city, filter_vacancies, get_vacancies_by_salary, print_vacancies, sort_vacancies, \
     get_top_vacancies
 from src.vacancy import Vacancy
 
