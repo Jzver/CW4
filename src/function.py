@@ -1,27 +1,33 @@
 def filter_city(vacancies_list, city):
-    if city.lower() != 'нет':
+    if city.lower() != 'нет' and city:
         new_list = []
         for vacancy in vacancies_list:
             if vacancy.city == city:
                 new_list.append(vacancy)
         return new_list
-    return vacancies_list
+    else:
+        return vacancies_list
 
 
 def filter_vacancies(city_vacancies, filter_words):
-    if filter_words.lower() != 'нет':
-        words = filter_words.split(' ')
+    if filter_words != 'нет' and filter_words:
+        words = filter_words
         new_list = []
         for vacancy in city_vacancies:
             for word in words:
-                if word in vacancy.description or word in vacancy.requirements:
-                    new_list.append(vacancy)
+                if vacancy.description:
+                    if word in vacancy.description:
+                        new_list.append(vacancy)
+                if vacancy.requirements:
+                    if word in vacancy.requirements:
+                        new_list.append(vacancy)
+
         return new_list
     return city_vacancies
 
 
 def get_vacancies_by_salary(filtered_vacancies, salary_range):
-    if salary_range.lower() != 'нет':
+    if salary_range.lower() != 'нет' and salary_range:
         salary = salary_range.split(' ')
         new_list = []
         for vacancy in filtered_vacancies:
@@ -32,7 +38,8 @@ def get_vacancies_by_salary(filtered_vacancies, salary_range):
                 if vacancy not in new_list:
                     new_list.append(vacancy)
         return new_list
-    return filtered_vacancies
+    else:
+        return filtered_vacancies
 
 
 def sort_vacancies(ranged_vacancies):
