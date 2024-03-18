@@ -9,6 +9,7 @@ class Save(ABC):
 
 
 class SaveToJSON(Save):
+
     def __init__(self, file_path, data_to_save):
         self.data_to_save = data_to_save
         self.file_path = file_path
