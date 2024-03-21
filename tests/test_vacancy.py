@@ -1,40 +1,22 @@
 from src.vacancy import Vacancy
-
-some_vacancy = Vacancy('title', 'city', 'url', 10000, None, 'description', 'requirements')
-other_vacancy = Vacancy('title', 'city', 'url', 3000, 15000, 'description', 'requirements')
+import pytest
 
 
-def test_init():
-    assert some_vacancy.title == 'title'
-    assert some_vacancy.city == 'city'
-    assert some_vacancy.url == 'url'
-    assert some_vacancy.salary_from == 10000
-    assert some_vacancy.salary_to == 0
-    assert some_vacancy.description == 'description'
-    assert some_vacancy.requirements == 'requirements'
-    assert some_vacancy.vacancy_id == 1
+@pytest.fixture()
+def random_vacancy():
+    return Vacancy("Охранник (склад)", "https://hh.ru/vacancy/94508038", None,
+                   {"requirement": "Знание системы работы видеонаблюдения. Внимательность. Ответственность."})
 
 
-def test_validate_salary():
-    some_vacancy.salary_to = None
-    some_vacancy.validate_salary()
-    assert some_vacancy.salary_to == 0
+def test_init(random_vacancy):
+    assert random_vacancy.name == "Охранник (склад)"
+    assert random_vacancy.url == "https://hh.ru/vacancy/94508038"
+    assert random_vacancy.salary == 0
+    assert random_vacancy.snippet == "Знание системы работы видеонаблюдения. Внимательность. Ответственность."
 
 
-def test_salary():
-    assert some_vacancy.salary == 10000
-
-
-def test_lt():
-    is_lt = (some_vacancy < other_vacancy)
-    assert is_lt == True
-
-
-def test_str():
-    assert str(some_vacancy) == ('Вакансия title, город - city, зарплата от 10000 до 0, '
-                                 'описание: description, требования: requirements, ссылка на вакансию: '
-                                 'url\n')
-
-
-def test_repr():
-    assert repr(other_vacancy) == 'Вакансия №2, title'
+def test_valid_salary():
+    assert Vacancy.valid_salary(None) == 0
+    assert Vacancy.valid_salary({"from": 1000, "to": None}) == 1000
+    assert Vacancy.valid_salary({"from": None, "to": 500}) == 500
+    assert Vacancy.valid_salary({"from": 1000, "to": 500}) == 750
